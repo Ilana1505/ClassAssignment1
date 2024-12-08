@@ -1,5 +1,33 @@
 ###
-
 GET http://localhost:3000
 
+### יצירת פוסט חדש 
+POST http://localhost:3000/posts
+Content-Type: application/json
+{
+    "title": "First Post",
+    "content": "This is the content of the first post.",
+    "sender": "user123"
+}
+### קבלת כל הפוסטים
+GET http://localhost:3000/posts 
+
+### קבלת פוסט לפי מזהה
+GET http://localhost:3000/posts/<postId> 
+
+### קבלת פוסטים לפי שולח
+GET http://localhost:3000/posts?sender=user123
+
+### עדכון פוסט
+PUT http://localhost:3000/posts/<postId>
+Content-Type: application/json
+{
+    "title": "Updated Title",
+    "content": "Updated content."
+}
+
 ###
+
+
+
+
