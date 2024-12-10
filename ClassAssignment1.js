@@ -1,20 +1,31 @@
 const express = require('express');
-const ClassAssignment1 = express();
 const dotenv = require('dotenv').config();
-const PORT = process.env.PORT;
-
 const connectDB = require('./config/db'); 
 const postRoutes = require('./routes/posts');
 
-connectDB(); // MongoDB -חיבור ל 
+const app = express();
+const PORT = process.env.PORT || 3000;  // אם ה-PORT לא מוגדר בסביבה, נשתמש ב-3000
 
-ClassAssignment1.get("/",(req,res) => {
-    res.send("test");
+// חיבור ל-MongoDB
+connectDB();  // חיבור ל-MongoDB דרך connectDB
+
+// הגדרת פרסוס של JSON
+app.use(express.json());
+
+// הגדרת הנתיבים (routes)
+app.use('/posts', postRoutes);
+
+// Endpoint לבדוק אם השרת עובד
+app.get("/", (req, res) => {
+    res.send("Server is up and running");
 });
 
-ClassAssignment1.use(express.json());
-ClassAssignment1.use('/posts', postRoutes);
-
-ClassAssignment1.listen(PORT, () => {
+// הפעלת השרת
+app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
 });
+
+
+
+
+
