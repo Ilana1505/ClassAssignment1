@@ -1,14 +1,20 @@
 const express = require('express');
 const router = express.Router();
+const postControllers = require('../controllers/postcontrollers');
 
-const postControllers = require('../controllers/post_controllers');
-
-router.get('/', postControllers.getAllPosts);
-router.get('/:id', postControllers.getPostById);
+// יצירת פוסט חדש
 router.post('/', postControllers.createPost);
-router.delete('/:id', postControllers.deletePost);  
 
+// קבלת כל הפוסטים
+router.get('/', postControllers.getAllPosts);
+
+// קבלת פוסט לפי מזהה
+router.get('/:id', postControllers.getPostById);
+
+// מחיקת פוסט
+router.delete('/:id', postControllers.deletePost);
 
 module.exports = router;
+
 
       

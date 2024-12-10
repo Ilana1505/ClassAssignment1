@@ -1,13 +1,11 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-dotenv.config();
+dotenv.config();  // טוען את הגדרות הסביבה
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.DB_URI, {
-      useNewUrlParser: true,
-    });
+    await mongoose.connect(process.env.DB_URI);
     console.log('MongoDB connected');
   } catch (err) {
     console.error(err.message);

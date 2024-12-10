@@ -4,31 +4,24 @@ const Post = require('../models/Post');
 // פונקציה לשליפת כל הפוסטים
 const getAllPosts = (req, res) => {
     Post.find()
-        .then(posts => {
-            res.json(posts); // מחזיר את כל הפוסטים
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(500).json({ message: 'Error fetching posts' });
-        });
+        .then(posts => res.status(200).json(posts))
+        .catch(err => res.status(500).json({ message: "Error fetching posts" }));
 };
 
-// יצירת פוסט לפי מזהה
+// פונקציה לשליפת פוסט לפי מזהה
 const getPostById = (req, res) => {
     const postId = req.params.id;
 
-    
     if (!mongoose.Types.ObjectId.isValid(postId)) {
         return res.status(400).json({ message: 'Invalid post ID' });
     }
 
-    // חיפוש פוסט על פי מזהה
     Post.findById(postId)
         .then(post => {
             if (!post) {
                 return res.status(404).json({ message: 'Post not found' });
             }
-            res.json(post); 
+            res.json(post);
         })
         .catch(err => {
             console.error(err);
@@ -36,7 +29,7 @@ const getPostById = (req, res) => {
         });
 };
 
-// יצירת פוסט חדש
+// פונקציה ליצירת פוסט חדש
 const createPost = (req, res) => {
     const { title, content, sender } = req.body;
 
@@ -47,16 +40,14 @@ const createPost = (req, res) => {
     });
 
     newPost.save()
-        .then(post => {
-            res.status(201).json(post);  
-        })
+        .then(post => res.status(201).json(post))
         .catch(err => {
             console.error(err);
             res.status(500).json({ message: 'Error creating post' });
         });
 };
 
-// מחיקת פוסט
+// פונקציה למחיקת פוסט
 const deletePost = (req, res) => {
     const postId = req.params.id;
 
@@ -83,3 +74,4 @@ module.exports = {
     createPost,
     deletePost,
 };
+
