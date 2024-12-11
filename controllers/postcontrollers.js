@@ -52,10 +52,9 @@ const updatePost = (req, res) => {
     const postId = req.params.id; 
     const { title, content } = req.body; 
 
-    // הדפסת הנתונים ב-console כדי לוודא שהגיעו נכון
-    console.log('Updating post with ID:', postId); // מזהה הפוסט
-    console.log('New title:', title); // כותרת הפוסט החדשה
-    console.log('New content:', content); // תוכן הפוסט החדש
+    console.log('Updating post with ID:', postId);
+    console.log('New title:', title); 
+    console.log('New content:', content); 
 
     if (!postId || !title || !content) {
         return res.status(400).json({ message: "Missing required fields" });
