@@ -1,14 +1,32 @@
 const mongoose = require('mongoose');
 const Post = require('../models/Post');
 
-// פונקציה לשליפת כל הפוסטים
+// יצירת פוסט חדש
+const createPost = (req, res) => {
+    const { title, content, sender } = req.body;
+
+    const newPost = new Post({
+        title,
+        content,
+        sender
+    });
+
+    newPost.save()
+        .then(post => res.status(201).json(post))
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ message: 'Error creating post' });
+        });
+};
+
+// קבלת כל הפוסטים
 const getAllPosts = (req, res) => {
     Post.find()
         .then(posts => res.status(200).json(posts))
         .catch(err => res.status(500).json({ message: "Error fetching posts" }));
 };
 
-// פונקציה לשליפת פוסט לפי מזהה
+// קבלת פוסט לפי מזהה
 const getPostById = (req, res) => {
     const postId = req.params.id;
 
@@ -29,25 +47,34 @@ const getPostById = (req, res) => {
         });
 };
 
-// פונקציה ליצירת פוסט חדש
-const createPost = (req, res) => {
-    const { title, content, sender } = req.body;
+// עדכון פוסט
+const updatePost = (req, res) => {
+    const postId = req.params.id; 
+    const { title, content } = req.body; 
 
-    const newPost = new Post({
-        title,
-        content,
-        sender
-    });
+    // הדפסת הנתונים ב-console כדי לוודא שהגיעו נכון
+    console.log('Updating post with ID:', postId); // מזהה הפוסט
+    console.log('New title:', title); // כותרת הפוסט החדשה
+    console.log('New content:', content); // תוכן הפוסט החדש
 
-    newPost.save()
-        .then(post => res.status(201).json(post))
+    if (!postId || !title || !content) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    Post.findByIdAndUpdate(postId, { title, content }, { new: true })
+        .then(updatedPost => {
+            if (!updatedPost) {
+                return res.status(404).json({ message: "Post not found" });
+            }
+            res.json(updatedPost); 
+        })
         .catch(err => {
             console.error(err);
-            res.status(500).json({ message: 'Error creating post' });
+            res.status(500).json({ message: "Error updating post", error: err });
         });
 };
 
-// פונקציה למחיקת פוסט
+// מחיקת פוסט
 const deletePost = (req, res) => {
     const postId = req.params.id;
 
@@ -69,9 +96,10 @@ const deletePost = (req, res) => {
 };
 
 module.exports = {
+    createPost,
     getAllPosts,
     getPostById,
-    createPost,
+    updatePost,
     deletePost,
 };
 

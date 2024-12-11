@@ -4,18 +4,15 @@ const connectDB = require('./config/db');
 const postRoutes = require('./routes/posts');
 
 const app = express();
-const PORT = process.env.PORT || 3000;  // אם ה-PORT לא מוגדר בסביבה, נשתמש ב-3000
+const PORT = process.env.PORT || 3000;  // הגדרת פורט לשרת
 
-// חיבור ל-MongoDB
-connectDB();  // חיבור ל-MongoDB דרך connectDB
+// התחברות למסד הנתונים
+connectDB();  
 
-// הגדרת פרסוס של JSON
 app.use(express.json());
 
-// הגדרת הנתיבים (routes)
 app.use('/posts', postRoutes);
 
-// Endpoint לבדוק אם השרת עובד
 app.get("/", (req, res) => {
     res.send("Server is up and running");
 });

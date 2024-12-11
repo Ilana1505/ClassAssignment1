@@ -11,6 +11,9 @@ router.get('/', postControllers.getAllPosts);
 // קבלת פוסט לפי מזהה
 router.get('/:id', postControllers.getPostById);
 
+// עדכון פוסט
+router.put('/:id', postControllers.updatePost);
+
 // מחיקת פוסט
 router.delete('/:id', postControllers.deletePost);
 

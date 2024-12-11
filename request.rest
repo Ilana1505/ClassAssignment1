@@ -14,13 +14,13 @@ Content-Type: application/json
 GET http://localhost:3000/posts 
 
 ### קבלת פוסט לפי מזהה
-GET http://localhost:3000/posts/60d4f9e42f6d8f001f1b2123 
+GET http://localhost:3000/posts/67483a0151ed21e92836fa4f
 
 ### קבלת פוסטים לפי שולח
 GET http://localhost:3000/posts?sender=user123
 
 ### עדכון פוסט
-PUT http://localhost:3000/posts/<postId>
+PUT http://localhost:3000/posts/67483a0151ed21e92836fa4f
 Content-Type: application/json
 
 {
@@ -30,7 +30,7 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/posts/<postId>
+DELETE http://localhost:3000/posts/67483a0151ed21e92836fa4f
 
 ###
 
