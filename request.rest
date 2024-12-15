@@ -14,13 +14,13 @@ Content-Type: application/json
 GET http://localhost:3000/posts 
 
 ### קבלת פוסט לפי מזהה
-GET http://localhost:3000/posts/67483a0151ed21e92836fa4f
+GET http://localhost:3000/posts/67585ea6fffe9f7307148050
 
 ### קבלת פוסטים לפי שולח
 GET http://localhost:3000/posts?sender=user123
 
 ### עדכון פוסט
-PUT http://localhost:3000/posts/67483a0151ed21e92836fa4f
+PUT http://localhost:3000/posts/67585ea6fffe9f7307148050
 Content-Type: application/json
 
 {
@@ -30,11 +30,31 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/posts/67483a0151ed21e92836fa4f
+DELETE http://localhost:3000/posts/67585f4afffe9f7307148052
 
 ###
 
+### יצירת תגובה חדשה
+POST http://localhost:3000/comments
+Content-Type: application/json
 
+{
+    "comment": "This is a comment",
+    "owner": "user123",
+    "postId": "67585ea6fffe9f7307148050"
+}
+
+### קבלת כל התגובות
+GET http://localhost:3000/comments
+
+### קבלת תגובה לפי מזהה
+GET http://localhost:3000/comments/675b351989d7ad0b14c11c7e
+
+### קבלת תגובות לפי שולח
+GET http://localhost:3000/comments?owner=user123
+
+### מחיקת תגובה
+DELETE http://localhost:3000/comments/675b34f289d7ad0b14c11c76
 
 
 

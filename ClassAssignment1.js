@@ -12,6 +12,7 @@ db.once("open", () => console.log("Connected to database"));
 
 
 const postRoutes = require('./routes/posts');
+const commentRoutes = require('./routes/comments'); // הוספ
 
 
 
@@ -22,7 +23,9 @@ connectDB();  // חיבור ל-MongoDB דרך connectDB
 app.use(express.json());
 
 // הגדרת הנתיבים (routes)
-app.use('/posts', postRoutes);
+app.use('/posts', postRoutes);  // חיבור לנתיב של פוסטים
+app.use('/comments', commentRoutes);  // חיבור לנתיב של תגובות
+
 
 // Endpoint לבדוק אם השרת עובד
 app.get("/", (req, res) => {
