@@ -1,7 +1,7 @@
-###
+### Test GET
 GET http://localhost:3000
 
-### יצירת פוסט חדש 
+### New Post
 POST http://localhost:3000/posts
 Content-Type: application/json
 
@@ -10,17 +10,17 @@ Content-Type: application/json
     "content": "This is the content of the first post.",
     "sender": "user123"
 }
-### קבלת כל הפוסטים
+### GET all posts
 GET http://localhost:3000/posts 
 
-### קבלת פוסט לפי מזהה
-GET http://localhost:3000/posts/67585ea6fffe9f7307148050
+### GET post by id
+GET http://localhost:3000/posts/6762bd9992528cab8f5c4394
 
-### קבלת פוסטים לפי שולח
+### GET post by sender
 GET http://localhost:3000/posts?sender=user123
 
-### עדכון פוסט
-PUT http://localhost:3000/posts/67585ea6fffe9f7307148050
+### Update post
+PUT http://localhost:3000/posts/6762bd9992528cab8f5c4394
 Content-Type: application/json
 
 {
@@ -29,32 +29,41 @@ Content-Type: application/json
 }
 
 ###
+DELETE http://localhost:3000/posts/6762bc313d6c8f9fa2760710
 
-DELETE http://localhost:3000/posts/67585f4afffe9f7307148052
 
-###
+### -----------------------------------------------
 
-### יצירת תגובה חדשה
+### New Comment
 POST http://localhost:3000/comments
 Content-Type: application/json
 
 {
     "comment": "This is a comment",
     "owner": "user123",
-    "postId": "67585ea6fffe9f7307148050"
+    "postId": "6762bd9992528cab8f5c4394"
 }
 
-### קבלת כל התגובות
+### GET all comments
 GET http://localhost:3000/comments
 
-### קבלת תגובה לפי מזהה
-GET http://localhost:3000/comments/675b351989d7ad0b14c11c7e
+### GET comment by id
+GET http://localhost:3000/comments/6762beeb92528cab8f5c43b7
 
-### קבלת תגובות לפי שולח
-GET http://localhost:3000/comments?owner=user123
+### GET comments by postId
+GET http://localhost:3000/comments/post/6762bd9992528cab8f5c4394
 
-### מחיקת תגובה
-DELETE http://localhost:3000/comments/675b34f289d7ad0b14c11c76
+### Update comment
+PUT http://localhost:3000/comments/6762beeb92528cab8f5c43b7
+Content-Type: application/json
+
+{
+    "comment": "This is the updated comment content"
+ 
+}
+
+###
+DELETE http://localhost:3000/comments/6762cdc8a206d0766db07892
 
 
 
