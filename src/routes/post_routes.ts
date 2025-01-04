@@ -1,19 +1,17 @@
 import express,{Request,Response} from 'express';
-import postControllers from '../controllers/post_controllers';
+import PostController from '../controllers/post_controllers';
 
 const router = express.Router();
 
-router.post('/', postControllers.CreatePost);
+router.post('/', PostController.CreateItem.bind(PostController));
 
-router.get('/', postControllers.GetAllPosts);
+router.get('/', PostController.GetAll.bind(PostController));
 
-router.get('/:id', postControllers.GetPostById);
+router.get('/:id', PostController.GetById.bind(PostController));
 
-router.put('/:id', (req: Request, res: Response) => {
-    postControllers.UpdatePost(req, res);
-});
+router.put('/:id', PostController.UpdateItem.bind(PostController));
 
-router.delete('/:id', postControllers.DeletePost);
+router.delete('/:id', PostController.DeleteItem.bind(PostController));
 
 export default router;
 
