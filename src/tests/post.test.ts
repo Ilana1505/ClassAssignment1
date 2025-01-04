@@ -17,7 +17,7 @@ afterAll(async () => {
     await mongoose.connection.close();       
 }); 
 
-var postId = "";
+let postId: string = "";
 
 const testPost = {
     title: "Test title",
