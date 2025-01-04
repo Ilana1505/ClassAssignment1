@@ -12,11 +12,11 @@ const CreateComment = async (req, res) => {
 
 
 const GetAllComments = async (req, res) => {
-    const filter = req.query.owner;
+    const filter = req.query.sender;
     try {
       let comments;
       if (filter) {
-        comments = await CommentModel.find({ owner: filter });
+        comments = await CommentModel.find({ sender: filter });
       } else {
         comments = await CommentModel.find();
       }

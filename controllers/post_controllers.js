@@ -11,6 +11,7 @@ const CreatePost = async (req, res) => {
 };
 
 const GetAllPosts = async (req, res) => {
+  const filter = req.query.sender;
   try {
       const posts = await PostModel.find();
       res.send(posts);

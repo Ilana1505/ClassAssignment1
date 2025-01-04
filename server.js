@@ -14,16 +14,11 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const postRoute = require("./routes/post_routes");
-app.use("/posts", postRoute);
+const PostRoute = require("./routes/post_routes");
+app.use("/posts", PostRoute);
 
-const commentRoute = require("./routes/comment_routes");
-app.use("/comments", commentRoute);
-
-app.get('/', (req, res) => {
-  res.send('Test');
-});
-
+const CommentRoute = require("./routes/comment_routes");
+app.use("/comments", CommentRoute);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

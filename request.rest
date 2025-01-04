@@ -1,7 +1,4 @@
-### Test GET
-GET http://localhost:3000
-
-### New Post
+### New post
 POST http://localhost:3000/posts
 Content-Type: application/json
 
@@ -14,13 +11,13 @@ Content-Type: application/json
 GET http://localhost:3000/posts 
 
 ### GET post by id
-GET http://localhost:3000/posts/6762bd9992528cab8f5c4394
+GET http://localhost:3000/posts/67697ba9aa20ac4a78cfcabe
 
 ### GET post by sender
 GET http://localhost:3000/posts?sender=user123
 
 ### Update post
-PUT http://localhost:3000/posts/6762bd9992528cab8f5c4394
+PUT http://localhost:3000/posts/67697ba9aa20ac4a78cfcabe
 Content-Type: application/json
 
 {
@@ -29,32 +26,32 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3000/posts/6762bc313d6c8f9fa2760710
+DELETE http://localhost:3000/posts/67697ba9aa20ac4a78cfcabe
 
 
 ### -----------------------------------------------
 
-### New Comment
+### New comment
 POST http://localhost:3000/comments
 Content-Type: application/json
 
 {
     "comment": "This is a comment",
-    "owner": "user123",
-    "postId": "6762bd9992528cab8f5c4394"
+    "postId": "6762bd9992528cab8f5c4394",
+    "sender": "user123"
 }
 
 ### GET all comments
 GET http://localhost:3000/comments
 
 ### GET comment by id
-GET http://localhost:3000/comments/6762beeb92528cab8f5c43b7
+GET http://localhost:3000/comments/67697bddaa20ac4a78cfcac3
 
 ### GET comments by postId
 GET http://localhost:3000/comments/post/6762bd9992528cab8f5c4394
 
 ### Update comment
-PUT http://localhost:3000/comments/6762beeb92528cab8f5c43b7
+PUT http://localhost:3000/comments/67697bddaa20ac4a78cfcac3
 Content-Type: application/json
 
 {
@@ -63,7 +60,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3000/comments/6762cdc8a206d0766db07892
+DELETE http://localhost:3000/comments/67697bddaa20ac4a78cfcac3
 
 
 
