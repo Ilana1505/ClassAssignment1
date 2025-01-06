@@ -12,13 +12,13 @@ Content-Type: application/json
 GET http://localhost:3000/posts 
 
 ### GET post by id
-GET http://localhost:3000/posts/677858c6da59ccbf8be84b25
+GET http://localhost:3000/posts/67798203f41abea7ca31949a
 
 ### GET post by sender
 GET http://localhost:3000/posts?sender=user123
 
 ### Update post
-PUT http://localhost:3000/posts/67785914da59ccbf8be84b31
+PUT http://localhost:3000/posts/67798203f41abea7ca31949a
 Content-Type: application/json
 
 {
@@ -47,13 +47,13 @@ Content-Type: application/json
 GET http://localhost:3000/comments
 
 ### GET comment by id
-GET http://localhost:3000/comments/67785938da59ccbf8be84b35
+GET http://localhost:3000/comments/677981c947bb8ec33f3a2109
 
 ### GET comments by postId
 GET http://localhost:3000/comments/post/677858c6da59ccbf8be84b25
 
 ### Update comment
-PUT http://localhost:3000/comments/67785938da59ccbf8be84b35
+PUT http://localhost:3000/comments/677981c947bb8ec33f3a2109
 Content-Type: application/json
 
 {

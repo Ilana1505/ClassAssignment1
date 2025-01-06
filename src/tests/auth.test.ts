@@ -7,9 +7,9 @@ import userModel, { IUser } from "../models/user_models";
 let app: Express;
 
 beforeAll(async () => {             
-    console.log("Before all tests");
+    console.log("Before all tests"); 
     app = await initApp();
-     await userModel.deleteMany({});
+    await userModel.deleteMany();
 });
 
 afterAll(async () => {          
@@ -17,19 +17,34 @@ afterAll(async () => {
     await mongoose.connection.close();       
 }); 
 
+
 const baseUrl = "/auth";
 
 type User = IUser & { token?: string };
 
-const testUser:User = {
+const testUser: User = {
     email: "test@user.com",
     password: "testpassword",
 }
 
-describe("Auth Tests", () => {
+describe("Auth test", () => {
     test("Auth test register", async () => {
         const response = await request(app).post(baseUrl + "/register").send(testUser);
         expect(response.statusCode).toBe(200);
+    });
+
+    test("Auth test register missing password", async () => {
+        const response = await request(app).post(baseUrl + "/register").send({
+            email: "sender@example.com",
+        });
+        expect(response.statusCode).not.toBe(200);
+    });
+
+    test("Auth test register missing email", async () => {
+        const response = await request(app).post(baseUrl + "/register").send({
+            password: "password123",
+        });
+        expect(response.statusCode).not.toBe(200);
     });
 
     test("Auth test login", async () => {
@@ -42,22 +57,39 @@ describe("Auth Tests", () => {
         testUser._id = response.body._id;
     });
 
-    test("Auth test me", async () => {
-        const response = await request(app).post("/posts").send({
-            title: "Test Post",  
-            content: "Test Content",
-            owner: "User123",      
+    test("Auth test login invalid password", async () => {
+        const response = await request(app).post(baseUrl + "/login").send({
+            email: testUser.email,
+            password: "wrongpassword",
         });
-        expect(response.statusCode).not.toBe(201);
-        const response2 = await request(app).post("/posts").set(
-            { authorization: "JWT  " + testUser.token }
-        ).send({
-            title: "Test Post",  
-            content: "Test Content",
-            owner: "User123",      
-        });
-        expect(response2.statusCode).toBe(201);
+        expect(response.statusCode).not.toBe(200);
     });
 
     
-});
+    test("Auth test protected route with token", async () => {
+        const loginResponse = await request(app).post(baseUrl + "/login").send(testUser);
+        const token = loginResponse.body.token;
+
+        const response = await request(app).post("/posts").set("authorization", `JWT ${token}`).send({
+            title: "Test Post",
+            content: "Test Content",
+            sender: "User123",
+        });
+        expect(response.statusCode).toBe(201);
+    });
+
+    test("Auth test protected route without token", async () => {
+        const response = await request(app).post("/posts").send({
+            title: "Test Post",
+            content: "Test Content",
+            sender: "User123",
+        });
+        expect(response.statusCode).not.toBe(201);
+    });
+
+    test("Auth test logout", async () => {
+        const response = await request(app).post(baseUrl + "/logout").set({ authorization: "JWT " + testUser.token });
+        expect(response.statusCode).toBe(200);
+    });
+
+ });

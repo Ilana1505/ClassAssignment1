@@ -9,30 +9,33 @@ import postRoute from "./routes/post_routes";
 import commentRoute from "./routes/comment_routes" ;
 import authRoute from "./routes/auth_routes";
 
-const db = mongoose.connection;
-db.on("error", (error) => console.error(error));
-db.once("open", () => console.log("Connected to database"));
+const initApp = async () => {
+  return new Promise<Express>((resolve, reject) => {
+    const db = mongoose.connection;
+    db.on("error", (error) => {
+      console.error(error);
+    });
+    db.once("open", () => {
+      console.log("Connected to MongoDB");
+    });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use("/posts", postRoute);
-app.use("/comments", commentRoute);
-app.use("/auth", authRoute);
-const initApp = (): Promise<Express> => {
-  return new Promise((resolve, reject) => {
     if (process.env.DB_URI === undefined) {
-      reject("DB_CONNECTION is not defined");
+      console.error("DB_URI is not defined");
+      reject();
     } else {
-      mongoose.connect(process.env.DB_URI)
-        .then(() => {
-          resolve(app);
-        })
-        .catch((err) => {
-          reject(err);
-        });
+        mongoose.connect(process.env.DB_URI).then(() => {
+      
+        app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({ extended: true }));
+
+        app.use("/posts", postRoute);
+        app.use("/comments", commentRoute);
+        app.use("/auth", authRoute);
+
+        resolve(app);
+      });
     }
   });
 };
 
-export default initApp; 
+export default initApp;

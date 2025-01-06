@@ -6,10 +6,12 @@ export interface IUser {
     _id?: string;
 }
 
-const userSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema<IUser>({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
 });
 
-const userModel = mongoose.model('users', userSchema);
-export default userModel;
+const UserModel = mongoose.model<IUser>('users', UserSchema);
+export default UserModel;
+
+
