@@ -1,4 +1,4 @@
-import express,{Request,Response} from 'express';
+import express from 'express';
 import PostController from '../controllers/post_controllers';
 
 const router = express.Router();

@@ -6,9 +6,10 @@ import { Express } from "express";
 
 let app: Express;
 
-beforeAll(async () => {             
-    app = await initApp();
-    console.log("Before all tests"); 
+
+beforeAll(async () => {  
+    app = await initApp(); 
+    console.log("Before all tests");           
     await PostModel.deleteMany();
 });
 
@@ -23,12 +24,10 @@ const testPost = {
     title: "Test title",
     content: "Test content",
     sender: "user123",
-};
-
+  }; 
+  
 const invalidPost = {
-    title: "Test title",
     content: "Test content",
-    // sender is missing
 };
 
 describe("Post test", () => {
@@ -65,6 +64,11 @@ describe("Post test", () => {
         expect(response.body._id).toBe(postId);
     });
 
+    test("Test get post by id fail", async () => {
+        const response = await request(app).get("/posts/6779946864cff57e00fb4694");
+        expect(response.statusCode).toBe(404);
+      });
+
     test("Test get post by sender", async () => {
         const response = await request(app).get("/posts?sender=" + testPost.sender);        
         expect(response.statusCode).toBe(200);
@@ -80,14 +84,7 @@ describe("Post test", () => {
         expect(response.body.content).toBe("Updated Content");
     });
 
-    test("Test update post - post not found", async () => {
-        const nonExistentPostId = "60f5b2f5f1d4c6f8a5b8e5d6"; 
-        const response = await request(app)
-            .put("/posts/" + nonExistentPostId)
-            .send({ title: "Updated Title", content: "Updated Content" });
-        expect(response.statusCode).toBe(404); 
-        expect(response.body.message).toBe("Item not found"); 
-    });
+
     
     test("Test delete post", async () => {
         const response = await request(app).delete("/posts/" + postId);

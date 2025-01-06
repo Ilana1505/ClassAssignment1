@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export interface iPost {
     title: string;
@@ -8,7 +8,7 @@ export interface iPost {
 
 const PostSchema = new mongoose.Schema<iPost>({
     title: { type: String, required: true },
-    content: { type: String, required: true },
+    content: { type: String },
     sender: { type: String, required: true },
 });
 
