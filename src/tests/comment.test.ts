@@ -3,13 +3,29 @@ import initApp from "../server_2";
 import mongoose from "mongoose";
 import CommentModel from "../models/comment_models";
 import { Express } from "express";
+import UserModel, { iUser } from "../models/user_models";
 
 let app: Express;
+
+type User = iUser & { token?: string };
+
+const testUser: User = {
+    email: "test@user.com",
+    password: "testpassword",
+};
+
 
 beforeAll(async () => {    
     app = await initApp();       
     console.log("Before all tests"); 
     await CommentModel.deleteMany();
+    await UserModel.deleteMany();
+
+    await request(app).post("/auth/register").send(testUser);
+        const res = await request(app).post("/auth/login").send(testUser);
+        testUser.token = res.body.token;
+        testUser._id = res.body._id;  
+        expect(testUser.token).toBeDefined();
 });
 
 afterAll(async() => {          
@@ -37,16 +53,21 @@ describe("Comment test", () => {
         expect(response.body).toHaveLength(0);
     });
     
-    test("Test adding new comment", async () => {
-        const response = await request(app).post("/comments").send(testComment);
+    test("Test Create Comment", async () => {
+        const response = await request(app).post("/comments")
+        .set("Authorization", "JWT " + testUser.token)  
+        .send(testComment);
         expect(response.statusCode).toBe(201);
         expect(response.body.comment).toBe(testComment.comment);
         expect(response.body.postId).toBe(testComment.postId);
         expect(response.body.sender).toBe(testComment.sender);
-        commentId = response.body._id;  
-    });
+        commentId = response.body._id;
+      });
+
     test("Test adding invalid comment", async () => {
-        const response = await request(app).post("/comments").send(invalidComment);
+        const response = await request(app).post("/comments")
+        .set("Authorization", "JWT " + testUser.token)  
+        .send(invalidComment);
         expect(response.statusCode).not.toBe(201);
     });
 
@@ -56,10 +77,12 @@ describe("Comment test", () => {
         expect(response.body).toHaveLength(1);
     });
 
-    test("Test get comment by id", async () => {
+    test("Comments get post by id", async () => {
         const response = await request(app).get("/comments/" + commentId);
         expect(response.statusCode).toBe(200);
-        expect(response.body._id).toBe(commentId);
+        expect(response.body.comment).toBe(testComment.comment);
+        expect(response.body.postId).toBe(testComment.postId);
+        expect(response.body.sender).toBe(testComment.sender);
     });
     
     test("Test get comment by id fail", async () => {
@@ -67,12 +90,14 @@ describe("Comment test", () => {
         expect(response.statusCode).toBe(404);
     });
 
-    test("Test get comment by sender", async () => {
-        const response = await request(app).get("/comments?sender=" + testComment.sender);        
+    test("Test get commenty by sender", async () => {
+        const response = await request(app).get("/comments?sender=" + testComment.sender);
         expect(response.statusCode).toBe(200);
-        expect(response.body).toHaveLength(1);
+        expect(response.body.length).toBe(1);
+        expect(response.body[0].comment).toBe(testComment.comment);
+        expect(response.body[0].postId).toBe(testComment.postId);
         expect(response.body[0].sender).toBe(testComment.sender);
-    });
+      });
 
     test("Test get comments by sender fail", async () => {
         const response = await request(app).get("/comments?sender=nonexistentUser");
@@ -106,15 +131,29 @@ describe("Comment test", () => {
     });
 
     test("Test delete comment", async () => {
-        const response = await request(app).delete("/comments/" + commentId);
-        expect(response.statusCode).toBe(200);
-        const responseGet = await request(app).get("/comments/" + commentId);
+        if (!commentId) {
+            console.error("commentId is not set!");
+            return;
+        }
+            const response = await request(app)
+            .delete("/comments/" + commentId)  
+            .set("Authorization", `Bearer ${testUser.token}`);  
+            expect(response.statusCode).toBe(200);
+            const responseGet = await request(app)
+            .get("/comments/" + commentId)
+            .set("Authorization", `Bearer ${testUser.token}`); 
+    
         expect(responseGet.statusCode).toBe(404);
     });
+    
+    
 
     test("Test delete comment not found", async () => {
-        const response = await request(app).delete("/comments/1234567890");
-        expect(response.statusCode).toBe(404);
+        const response = await request(app)
+            .delete("/comments/1234567890")
+            .set("Authorization", `Bearer ${testUser.token}`);  
+        expect(response.statusCode).toBe(404);  
     });
     
+
 });

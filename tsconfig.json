@@ -3,6 +3,7 @@
       "module": "commonjs" ,
       "esModuleInterop": true ,
       "target": "es2016" ,
+      "resolveJsonModule": true,
       "moduleResolution": "node",
       "strict": true ,
       "sourceMap": true,

@@ -14,8 +14,8 @@ const register = async (req: Request, res: Response) => {
             }
         );
         res.status(200).send(user);
-    }catch(err){
-        res.status(400).send(err);
+    }catch(error){
+        res.status(400).send(error);
     }
 };
 
@@ -32,15 +32,15 @@ const login = async (req: Request, res: Response) => {
         return;
     }
     if (!process.env.TOKEN_SECRET) {
-        res.status(500).send("Server Error");
+        res.status(400).send("Bad Request: TOKEN_SECRET is missing");
         return;
     }
     const token = jwt.sign({ _id: user._id }, 
         process.env.TOKEN_SECRET,
         { expiresIn: process.env.TOKEN_EXPIRES });
         res.status(200).send({token: token, _id: user._id});
-    }catch(err){
-        res.status(400).send(err); 
+    }catch(error){
+        res.status(400).send(error); 
     }
 };
 
@@ -48,6 +48,9 @@ const logout = async (req:Request, res:Response) => {
     res.status(200).send("Logged out");
 };
 
+type Payload = {
+    _id: string;    
+};
 export const authMiddleware = (req:Request, res:Response, next:NextFunction) => { 
     const authorization = req.header('authorization');
     const token = authorization && authorization.split(' ')[1];
@@ -57,15 +60,16 @@ export const authMiddleware = (req:Request, res:Response, next:NextFunction) => 
         return;
     }
     if (!process.env.TOKEN_SECRET) {
-        res.status(500).send("Server Error");
+        res.status(400).send("Bad Request: TOKEN_SECRET is missing");
         return;
     }
     
-    jwt.verify(token, process.env.TOKEN_SECRET, (err,  payload) => {
-        if (err) {
+    jwt.verify(token, process.env.TOKEN_SECRET, (error,  payload) => {
+        if (error) {
             res.status(401).send("Access Denied");
             return;
         }
+        req.body._id = (payload as Payload)._id;
         next();
     });
 };   

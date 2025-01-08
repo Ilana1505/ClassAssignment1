@@ -9,6 +9,14 @@ import postRoute from "./routes/post_routes";
 import commentRoute from "./routes/comment_routes" ;
 import authRoute from "./routes/auth_routes";
 
+const db = mongoose.connection; 
+db.on("error", (error) => {
+  console.error(error);
+});
+db.once("open", () => {
+  console.log("Connected to database");
+});
+
 const initApp = async () => {
   return new Promise<Express>((resolve, reject) => {
     const db = mongoose.connection;

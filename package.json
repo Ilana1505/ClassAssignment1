@@ -5,8 +5,10 @@
   "scripts": {
     "start": "tsc && node ./dist/src/server.js",
     "dev": "nodemon ./src/server.ts",
-    "test": "tsc && jest --detectOpenHandles --forceExit --coverage",
+    "test": "tsc && jest --detectOpenHandles --forceExit --runInBand",
     "testAuth": "tsc && jest --detectOpenHandles --forceExit auth.test.ts",
+    "testPost": "tsc && jest --detectOpenHandles --forceExit post.test.ts",
+    "testComment": "tsc && jest --detectOpenHandles --forceExit comment.test.ts",
     "lint": "eslint . --ext .ts"
   },
   "author": "Ilana Barkin + Dana Elazra",

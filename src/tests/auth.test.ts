@@ -2,7 +2,7 @@ import request from "supertest";
 import initApp from "../server_2";
 import mongoose from "mongoose";
 import { Express } from "express";
-import userModel, { IUser } from "../models/user_models";
+import userModel, { iUser } from "../models/user_models";
 
 let app: Express;
 
@@ -17,10 +17,9 @@ afterAll(async () => {
     await mongoose.connection.close();       
 }); 
 
-
 const baseUrl = "/auth";
 
-type User = IUser & { token?: string };
+type User = iUser & { token?: string };
 
 const testUser: User = {
     email: "test@user.com",
@@ -65,12 +64,13 @@ describe("Auth test", () => {
         expect(response.statusCode).not.toBe(200);
     });
 
-    
     test("Auth test protected route with token", async () => {
         const loginResponse = await request(app).post(baseUrl + "/login").send(testUser);
         const token = loginResponse.body.token;
 
-        const response = await request(app).post("/posts").set("authorization", `JWT ${token}`).send({
+        const response = await request(app).post("/posts").set(
+            { authorization: "JWT " + testUser.token }
+        ).send({
             title: "Test Post",
             content: "Test Content",
             sender: "User123",
