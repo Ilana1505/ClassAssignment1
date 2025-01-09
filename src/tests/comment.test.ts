@@ -22,7 +22,7 @@ let commentId = "";
 
 const testComment = {
     comment: "Test title",
-    postId: "abcdefgh",
+    postId: "123456789123456789123456",
     sender: "user123",
 }
   
@@ -46,6 +46,7 @@ describe("Comment test", () => {
         expect(response.body.sender).toBe(testComment.sender);
         commentId = response.body._id;  
     });
+
     test("Test adding invalid comment", async () => {
         const response = await request(app).post("/comments").send(invalidComment);
         expect(response.statusCode).not.toBe(201);
@@ -55,17 +56,6 @@ describe("Comment test", () => {
         const response = await request(app).get("/comments");
         expect(response.statusCode).toBe(200);
         expect(response.body).toHaveLength(1);
-    });
-
-    test("Test get comment by id", async () => {
-        const response = await request(app).get("/comments/" + commentId);
-        expect(response.statusCode).toBe(200);
-        expect(response.body._id).toBe(commentId);
-    });
-    
-    test("Test get comment by id fail", async () => {
-        const response = await request(app).get("/comments/6779872076207a7fc9997020");
-        expect(response.statusCode).toBe(404);
     });
 
     test("Test get comment by sender", async () => {
@@ -81,6 +71,32 @@ describe("Comment test", () => {
         expect(response.body).toHaveLength(0);
     });
 
+    test("Test get comment by postId", async () => {
+        const response = await request(app).get("/comments/posts/" + testComment.postId);        
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toHaveLength(1);
+        expect(response.body[0].postId).toBe(testComment.postId);
+    });
+
+    test("Test get comment by id", async () => {
+        const response = await request(app).get("/comments/" + commentId);
+        expect(response.statusCode).toBe(200);
+        expect(response.body._id).toBe(commentId);
+    });
+    
+    test("Test get comment by id fail", async () => {
+        const response = await request(app).get("/comments/6779872076207a7fc9997020");
+        expect(response.statusCode).toBe(404);
+    });
+
+    test("Test get comment with invalid id format", async () => {
+        const invalidId = "invalidId123";  
+        const response = await request(app).get(`/comments/${invalidId}`);
+        expect(response.statusCode).toBe(400);
+        expect(response.body).toHaveProperty("message"); 
+        expect(response.body.message).toContain("Cast to ObjectId failed");  
+    });
+    
     test("Test update comment", async () => {
         const response = await request(app).put("/comments/" + commentId)
             .send({ comment: "Update Comment" });
@@ -97,14 +113,6 @@ describe("Comment test", () => {
             .send({ comment: "Another update" });
         expect(response.statusCode).toBe(404);
     });
-    
-    test("Test get comments by Id - catch block", async () => {
-        const response = await request(app)
-            .get("/comments/invalid-post-id") 
-            .send();
-        expect(response.statusCode).toBe(400); 
-        expect(response.body).toHaveProperty("message"); 
-    });
 
     test("Test delete comment", async () => {
         const response = await request(app).delete("/comments/" + commentId);
@@ -117,8 +125,6 @@ describe("Comment test", () => {
         const response = await request(app).delete("/comments/1234567890");
         expect(response.statusCode).toBe(404);
     });
-
-    
-
-    
 });
+
+

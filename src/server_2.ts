@@ -7,6 +7,30 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import PostRoute from "./routes/post_routes";
 import CommentRoute from "./routes/comment_routes" ;
+import swaggerJsDoc from "swagger-jsdoc";
+import swaggerUI from "swagger-ui-express";
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use("/posts", PostRoute);
+app.use("/comments", CommentRoute);
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Web Dev 2025 REST API",
+      version: "1.0.0",
+      description: "REST server including authentication using JWT",
+    },
+    servers: [{ url: "http://localhost:" + process.env.PORT, },],
+  },
+  apis: ["./src/routes/*.ts"],
+};
+
+const specs = swaggerJsDoc(options);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 const initApp = async () => {
   return new Promise<Express>((resolve, reject) => {
@@ -23,13 +47,6 @@ const initApp = async () => {
       reject();
     } else {
         mongoose.connect(process.env.DB_URI).then(() => {
-      
-        app.use(bodyParser.json());
-        app.use(bodyParser.urlencoded({ extended: true }));
-
-        app.use("/posts", PostRoute);
-        app.use("/comments", CommentRoute);
-        
         resolve(app);
       });
     }

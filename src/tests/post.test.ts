@@ -58,6 +58,19 @@ describe("Post test", () => {
         expect(response.body).toHaveLength(1);
     });
 
+    test("Test get post by sender", async () => {
+        const response = await request(app).get("/posts?sender=" + testPost.sender);        
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toHaveLength(1);
+        expect(response.body[0].sender).toBe(testPost.sender);
+    });
+
+    test("Test get posts by sender fail", async () => {
+        const response = await request(app).get("/posts?sender=nonexistentUser");
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toHaveLength(0);  
+    });
+    
     test("Test get post by id", async () => {
         const response = await request(app).get("/posts/" + postId);
         expect(response.statusCode).toBe(200);
@@ -67,13 +80,6 @@ describe("Post test", () => {
     test("Test get post by id fail", async () => {
         const response = await request(app).get("/posts/6779946864cff57e00fb4694");
         expect(response.statusCode).toBe(404);
-      });
-
-    test("Test get post by sender", async () => {
-        const response = await request(app).get("/posts?sender=" + testPost.sender);        
-        expect(response.statusCode).toBe(200);
-        expect(response.body).toHaveLength(1);
-        expect(response.body[0].sender).toBe(testPost.sender);
     });
 
     test("Test update post", async () => {
@@ -84,8 +90,6 @@ describe("Post test", () => {
         expect(response.body.content).toBe("Updated Content");
     });
 
-
-    
     test("Test delete post", async () => {
         const response = await request(app).delete("/posts/" + postId);
         expect(response.statusCode).toBe(200);
