@@ -1,5 +1,6 @@
 import express from 'express';
 import CommentController from '../controllers/comment_controllers';
+import {authMiddleware} from '../controllers/auth_controllers';
 
 const router = express.Router();
 
@@ -71,7 +72,7 @@ const router = express.Router();
  *         description: Missing or incorrect input
  */
 
-router.post('/', CommentController.CreateItem.bind(CommentController));
+router.post('/', authMiddleware , CommentController.CreateItem.bind(CommentController));
 
 /**
  * @openapi
@@ -199,7 +200,7 @@ router.get('/:id', CommentController.GetById.bind(CommentController));
  *         description: Invalid input
  */
 
-router.put('/:id', CommentController.UpdateItem.bind(CommentController));
+router.put('/:id', authMiddleware , CommentController.UpdateItem.bind(CommentController));
 
 /**
  * @openapi
@@ -222,6 +223,6 @@ router.put('/:id', CommentController.UpdateItem.bind(CommentController));
  *         description: Comment not found 
  */
 
-router.delete('/:id', CommentController.DeleteItem.bind(CommentController));
+router.delete('/:id', authMiddleware , CommentController.DeleteItem.bind(CommentController));
 
 export default router;

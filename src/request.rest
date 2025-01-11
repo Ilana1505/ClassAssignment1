@@ -1,70 +1,100 @@
+### Register a new user
+POST http://localhost:3000/auth/register
+Content-Type: application/json
 
-### New Post
+{
+  "email": "dana199@gmail.com",
+  "password": "1234"
+}
+
+### Login a user
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "dana199@gmail.com",
+  "password": "1234"
+}
+
+### Refresh a user token
+POST http://localhost:3000/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZjJmNGQ5NWVlZmQ3ZTdkMTQ0NTUiLCJyYW5kb20iOjgzNzk0NSwiaWF0IjoxNzM2NjM1MTI2LCJleHAiOjE3MzcyMzk5MjZ9.FpgLjFifVSknQnxIKaWMBEfFAGRyXhBFBNDGMxLX4Mw"
+}
+
+### Create a new post with an access token
 POST http://localhost:3000/posts
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZWZlNzY5YzU1NGEwM2E0NTVhMTciLCJyYW5kb20iOjkzMTMxNCwiaWF0IjoxNzM2NjM0NDE0LCJleHAiOjE3MzY2MzQ0NDR9.Hsb9KaGAkj6xx2reTmSI7YIu3NVTnrZQdm2uLCPNJec
 
 {
-    "title": "First Post",
-    "content": "This is the content of the first post",
-    "sender": "user1236"
+  "title": "My First Post",
+  "content": "This is the content of my first post.",
+  "sender": "6782e44cdd1b988b919ee0f1"
 }
-### GET all posts
-GET http://localhost:3000/posts 
 
-### GET post by id
-GET http://localhost:3000/posts/677f0d8cbd68e7ba8e3ebfe7
+### Get all posts
+GET http://localhost:3000/posts
 
-### GET post by sender
-GET http://localhost:3000/posts?sender=user123
+### Get post by ID
+GET http://localhost:3000/posts/6782e534848ccc693deffd2c
 
-### Update post
-PUT http://localhost:3000/posts/677ef447809c25dcffd87221
+### Get posts by sender
+GET http://localhost:3000/posts?sender=6782e44cdd1b988b919ee0f1
+
+### Update a post with an access token
+PUT http://localhost:3000/posts/6782e534848ccc693deffd2c
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZTQ0Y2RkMWI5ODhiOTE5ZWUwZjEiLCJyYW5kb20iOjk2NzQzNiwiaWF0IjoxNzM2NjMxODU5LCJleHAiOjE3MzY2MzIwMzl9.k8X1gHZedeSDXnA8J5TWnVCGa6fgnRgN2g6YmQqL06w
 
 {
-    "title": "Updated Title",
-    "content": "Updated content"
+  "title": "Updated Title",
+  "content": "Updated content of the post."
 }
 
-###
-DELETE http://localhost:3000/posts/677effd30385ec6fc3efe750
+### Delete a post with an access token
+DELETE http://localhost:3000/posts/6782e552848ccc693deffd2e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZTQ0Y2RkMWI5ODhiOTE5ZWUwZjEiLCJyYW5kb20iOjk2NzQzNiwiaWF0IjoxNzM2NjMxODU5LCJleHAiOjE3MzY2MzIwMzl9.k8X1gHZedeSDXnA8J5TWnVCGa6fgnRgN2g6YmQqL06w
 
-
-### -----------------------------------------------
-
-### New Comment
+### Create a new comment with an access token
 POST http://localhost:3000/comments
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZTQ0Y2RkMWI5ODhiOTE5ZWUwZjEiLCJyYW5kb20iOjcwNjA3NCwiaWF0IjoxNzM2NjMyMjc0LCJleHAiOjE3MzY2MzI0NTR9.9ks6z_MUJ-X-Jjsrn6cG-km8tXZLdcKfsW6x_TDURcg
 
 {
-    "comment": "This is a comment",
-    "postId": "677ef452809c25dcffd87223",
-    "sender": "user123"
-  
+  "comment": "This is a comment",
+  "postId": "6782e7fd848ccc693deffd6d",
+  "sender": "6782e44cdd1b988b919ee0f1"
 }
 
-### GET all comments
+### Get all comments
 GET http://localhost:3000/comments
 
+### Get comments by postId
+GET http://localhost:3000/comments/posts/6782e7fd848ccc693deffd6d
 
-### GET comments by postId
-GET http://localhost:3000/comments/posts/677ef452809c25dcffd87223
+### Get comment by ID
+GET http://localhost:3000/comments/6782e6aa848ccc693deffd4f
 
-### GET comment by id
-GET http://localhost:3000/comments/677f13636e6c4f739a497849
+### Update comment with an access token
+PUT http://localhost:3000/comments/6782e6aa848ccc693deffd4f
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZTQ0Y2RkMWI5ODhiOTE5ZWUwZjEiLCJyYW5kb20iOjM5NDM4NiwiaWF0IjoxNzM2NjMyMDg4LCJleHAiOjE3MzY2MzIyNjh9.sm5IhCAmTQT-Tg_fVkszJ2UjKq47m9WqVOwjURcdq_s
 
-### Update comment
-PUT http://localhost:3000/comments/677ef4d772ff0afe699830f5
+{
+  "comment": "This is the updated comment content"
+}
+
+### Delete comment with an access token
+DELETE http://localhost:3000/comments/6782e6aa848ccc693deffd4f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZTQ0Y2RkMWI5ODhiOTE5ZWUwZjEiLCJyYW5kb20iOjM5NDM4NiwiaWF0IjoxNzM2NjMyMDg4LCJleHAiOjE3MzY2MzIyNjh9.sm5IhCAmTQT-Tg_fVkszJ2UjKq47m9WqVOwjURcdq_s
+
+### Logout a user
+POST http://localhost:3000/auth/logout
 Content-Type: application/json
 
 {
-    "comment": "This is the updated comment content"
- 
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZTQ0Y2RkMWI5ODhiOTE5ZWUwZjEiLCJyYW5kb20iOjM2NjI4NiwiaWF0IjoxNzM2NjMyNDQ3LCJleHAiOjE3MzcyMzcyNDd9.s3wUKgJ-TCV431Y2GwcRU1w_gP78wWO9DmQtbbL9-kE"
 }
-
-###
-DELETE http://localhost:3000/comments/677efff30385ec6fc3efe753
-
-
-
-

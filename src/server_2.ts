@@ -7,14 +7,18 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import PostRoute from "./routes/post_routes";
 import CommentRoute from "./routes/comment_routes" ;
+import AuthRoute from "./routes/auth_routes";
 import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUI from "swagger-ui-express";
+
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/posts", PostRoute);
 app.use("/comments", CommentRoute);
+app.use("/auth", AuthRoute);
 
 const options = {
   definition: {

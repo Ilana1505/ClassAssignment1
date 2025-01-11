@@ -1,6 +1,14 @@
 import CommentModel,{iComment} from "../models/comment_models";
-import CreateController from "./base_controllers";
+import BaseController  from "./base_controllers";
 
-const CommentController = CreateController<iComment>(CommentModel);
+class CommentController extends BaseController<iComment> {
+    constructor() {
+        super(CommentModel);
+    }
 
-export default CommentController;
+
+
+
+}
+
+export default new CommentController();

@@ -1,5 +1,6 @@
 import express from 'express';
 import PostController from '../controllers/post_controllers';
+import {authMiddleware} from '../controllers/auth_controllers';
 
 const router = express.Router();
 
@@ -71,7 +72,7 @@ const router = express.Router();
  *         description: Missing or incorrect input
  */
 
-router.post('/', PostController.CreateItem.bind(PostController));
+router.post('/',authMiddleware ,PostController.CreateItem.bind(PostController));
 
 /**
  * @openapi
@@ -174,7 +175,7 @@ router.get('/:id', PostController.GetById.bind(PostController));
  *         description: Invalid input
  */
 
-router.put('/:id', PostController.UpdateItem.bind(PostController));
+router.put('/:id',authMiddleware, PostController.UpdateItem.bind(PostController));
 
 /**
  * @openapi
@@ -197,6 +198,6 @@ router.put('/:id', PostController.UpdateItem.bind(PostController));
  *         description: Post not found
  */
 
-router.delete('/:id', PostController.DeleteItem.bind(PostController));
+router.delete('/:id',authMiddleware, PostController.DeleteItem.bind(PostController));
 
 export default router;

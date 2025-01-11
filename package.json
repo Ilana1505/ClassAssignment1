@@ -5,23 +5,29 @@
   "scripts": {
     "start": "tsc && node ./dist/src/server.js",
     "dev": "nodemon ./src/server.ts",
-    "test": "tsc && jest --detectOpenHandles --forceExit --coverage",
+    "test": "tsc && jest --detectOpenHandles --forceExit --coverage --runInBand",
     "testPost": "tsc && jest --detectOpenHandles --forceExit post.test.ts",
+    "testAuth": "tsc && jest --detectOpenHandles --forceExit --coverage auth.test.ts",
+    "testComment": "tsc && jest --detectOpenHandles --forceExit comment.test.ts",
     "lint": "eslint . --ext .ts"
   },
   "author": "Ilana Barkin + Dana Elazra",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.11.0",
     "mongoose": "^8.8.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/supertest": "^6.0.2",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.7",

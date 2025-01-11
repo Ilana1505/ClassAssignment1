@@ -87,8 +87,5 @@ class BaseController<T> {
     
 }
 
-const CreateController = <T>(model: Model<T>) => {
-    return new BaseController(model);
-};
 
-export default CreateController;
+export default BaseController;

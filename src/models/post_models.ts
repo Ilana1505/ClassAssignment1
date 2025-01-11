@@ -9,7 +9,7 @@ export interface iPost {
 const PostSchema = new mongoose.Schema<iPost>({
     title: { type: String, required: true },
     content: { type: String },
-    sender: { type: String, required: true },
+    sender: { type: String, required: true }
 });
 
 const PostModel = mongoose.model<iPost>('posts', PostSchema);

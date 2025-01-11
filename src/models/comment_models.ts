@@ -9,8 +9,9 @@ export interface iComment {
 const CommentSchema = new mongoose.Schema<iComment>({
   comment: { type: String, required: true },
   postId: { type: String, required: true },
-  sender: { type: String, required: true },
+  sender: { type: String, required: true }
 });
 
 const CommentModel = mongoose.model<iComment>('comments', CommentSchema);
+
 export default CommentModel;
