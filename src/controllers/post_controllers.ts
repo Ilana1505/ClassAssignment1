@@ -1,6 +1,25 @@
 import PostModel,{iPost} from "../models/post_models";
-import CreateController from "./base_controllers";
+import { Request, Response } from "express";
+import BaseController from "./base_controllers";
 
-const PostController = CreateController<iPost>(PostModel);
+class PostController extends BaseController <iPost>{
+    constructor() {
+        super(PostModel);
+    }
 
-export default PostController;
+    async CreateItem(req: Request, res: Response) {
+        const _id = req.query.userId;
+        if (!_id) {
+         res.status(400).send("userId is required")
+         return;
+        }
+        const post = {
+            ...req.body,
+            sender: _id
+        }
+        req.body = post;
+        return super.CreateItem(req, res);
+    }
+}
+
+export default new PostController();
