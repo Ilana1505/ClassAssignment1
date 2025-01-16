@@ -27,7 +27,7 @@ Content-Type: application/json
 ### Create a new post with an access token
 POST http://localhost:3000/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZWZlNzY5YzU1NGEwM2E0NTVhMTciLCJyYW5kb20iOjkzMTMxNCwiaWF0IjoxNzM2NjM0NDE0LCJleHAiOjE3MzY2MzQ0NDR9.Hsb9KaGAkj6xx2reTmSI7YIu3NVTnrZQdm2uLCPNJec
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg5M2UzMzc1ZDAzNGJlNDQ4ZGE4ZjYiLCJyYW5kb20iOjQ5NjMzOCwiaWF0IjoxNzM3MDQ4MDkwLCJleHAiOjE3MzcwNDgwOTV9.a3b4r5vqGKONdToUOGrw5Q0VjWL8pjEOMBUVP5UXViY
 
 {
   "title": "My First Post",

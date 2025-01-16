@@ -44,6 +44,8 @@ const router = express.Router();
  *     summary: Creates a new comment
  *     description: Creates a new comment for a post.
  *     tags: [Comments]
+ *    security:
+ *     - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -168,6 +170,8 @@ router.get('/:id', CommentController.GetById.bind(CommentController));
  *     summary: Update a comment by ID
  *     description: Updates the content of an existing comment.
  *     tags: [Comments]
+ *    security:
+ *    - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -209,6 +213,8 @@ router.put('/:id', authMiddleware , CommentController.UpdateItem.bind(CommentCon
  *     summary: Delete a comment by ID
  *     description: Deletes a comment from the system by its unique ID. 
  *     tags: [Comments]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
