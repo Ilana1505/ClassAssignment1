@@ -5,10 +5,6 @@ class CommentController extends BaseController<iComment> {
     constructor() {
         super(CommentModel);
     }
-
-
-
-
 }
 
 export default new CommentController();
