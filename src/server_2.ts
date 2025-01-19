@@ -15,7 +15,12 @@ import swaggerUI from "swagger-ui-express";
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  next();
+});
 app.use("/posts", PostRoute);
 app.use("/comments", CommentRoute);
 app.use("/auth", AuthRoute);
@@ -36,22 +41,20 @@ const options = {
 const specs = swaggerJsDoc(options);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
-const initApp = async () => {
+const initApp = (): Promise<Express> => {
   return new Promise<Express>((resolve, reject) => {
     const db = mongoose.connection;
-    db.on("error", (error) => {
-      console.error(error);
-    });
-    db.once("open", () => {
-      console.log("Connected to MongoDB");
-    });
+    db.on("error", console.error.bind(console, "connection error:"));
+    db.once("open", function () { console.log("Connected to the database") });
 
-    if (process.env.DB_URI === undefined) {
-      console.error("DB_URI is not defined");
-      reject();
+    if (!process.env.DB_URI) {
+      reject("DB_URI is not defined");
     } else {
         mongoose.connect(process.env.DB_URI).then(() => {
         resolve(app);
+      })
+       .catch((error) => {
+        reject(error);
       });
     }
   });

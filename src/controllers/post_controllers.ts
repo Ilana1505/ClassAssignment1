@@ -9,10 +9,6 @@ class PostController extends BaseController <iPost>{
 
     async CreateItem(req: Request, res: Response) {
         const _id = req.query.userId;
-        if (!_id) {
-         res.status(400).send("userId is required")
-         return;
-        }
         const post = {
             ...req.body,
             sender: _id
@@ -21,5 +17,6 @@ class PostController extends BaseController <iPost>{
         return super.CreateItem(req, res);
     }
 }
+
 
 export default new PostController();

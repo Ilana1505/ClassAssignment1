@@ -266,7 +266,16 @@
 <a name='L201'></a><a href='#L201'>201</a>
 <a name='L202'></a><a href='#L202'>202</a>
 <a name='L203'></a><a href='#L203'>203</a>
-<a name='L204'></a><a href='#L204'>204</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a>
+<a name='L210'></a><a href='#L210'>210</a>
+<a name='L211'></a><a href='#L211'>211</a>
+<a name='L212'></a><a href='#L212'>212</a>
+<a name='L213'></a><a href='#L213'>213</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -340,26 +349,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -397,6 +386,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -443,7 +459,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -471,7 +489,7 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import express from 'express';
 import PostController from '../controllers/post_controllers';
-import {authMiddleware} from '../controllers/auth_controllers';
+import { authMiddleware } from '../controllers/auth_controllers';
 &nbsp;
 const router = express.Router();
 &nbsp;
@@ -483,7 +501,7 @@ const router = express.Router();
  */
 &nbsp;
 /**
- * @openapi
+ * @swagger
  * components:
  *   schemas:
  *     Post:
@@ -509,11 +527,23 @@ const router = express.Router();
  */
 &nbsp;
 /**
- * @openapi
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+&nbsp;
+/**
+ * @swagger
  * /posts:
  *   post:
  *     summary: Creates a new post
  *     description: Creates a new post with a title and content.
+ *     security:
+ *       - bearerAuth: []  
  *     tags: [Posts]
  *     requestBody:
  *       required: true
@@ -523,15 +553,13 @@ const router = express.Router();
  *             type: object
  *             properties:
  *               title:
- *                 type: string           
+ *                 type: string  
+ *                 description: The post title
+ *                 example: "My first post"         
  *               content:
  *                 type: string
- *               sender:
- *                 type: string
- *             required:
- *               - title
- *               - content
- *               - sender
+ *                 description: The post content
+ *                 example: "This is my first post ....."
  *     responses:
  *       201:
  *         description: The created post
@@ -542,11 +570,10 @@ const router = express.Router();
  *       400:
  *         description: Missing or incorrect input
  */
-&nbsp;
-router.post('/',authMiddleware ,PostController.CreateItem.bind(PostController));
+router.post('/', authMiddleware, PostController.CreateItem.bind(PostController));
 &nbsp;
 /**
- * @openapi
+ * @swagger
  * /posts:
  *   get:
  *     summary: Get all posts
@@ -571,11 +598,10 @@ router.post('/',authMiddleware ,PostController.CreateItem.bind(PostController));
  *       400:
  *         description: Invalid query parameters
  */
-&nbsp;
 router.get('/', PostController.GetAll.bind(PostController));
 &nbsp;
 /**
- * @openapi
+ * @swagger
  * /posts/{id}:
  *   get:
  *     summary: Get a post by ID
@@ -600,15 +626,16 @@ router.get('/', PostController.GetAll.bind(PostController));
  *       400:
  *         description: Invalid ID format
  */
-&nbsp;
 router.get('/:id', PostController.GetById.bind(PostController));
 &nbsp;
 /**
- * @openapi
+ * @swagger
  * /posts/{id}:
  *   put:
  *     summary: Update a post by ID
  *     description: Updates the content of an existing post.
+ *     security:
+ *       - bearerAuth: []  
  *     tags: [Posts]
  *     parameters:
  *       - in: path
@@ -645,15 +672,16 @@ router.get('/:id', PostController.GetById.bind(PostController));
  *       400:
  *         description: Invalid input
  */
-&nbsp;
-router.put('/:id',authMiddleware, PostController.UpdateItem.bind(PostController));
+router.put('/:id', authMiddleware, PostController.UpdateItem.bind(PostController));
 &nbsp;
 /**
- * @openapi
+ * @swagger
  * /posts/{id}:
  *   delete:
  *     summary: Delete a post by ID
- *     description: Deletes a post from the system by its unique ID. 
+ *     description: Deletes a post from the system by its unique ID.
+ *     security:
+ *       - bearerAuth: []  
  *     tags: [Posts]
  *     parameters:
  *       - in: path
@@ -668,8 +696,7 @@ router.put('/:id',authMiddleware, PostController.UpdateItem.bind(PostController)
  *       404:
  *         description: Post not found
  */
-&nbsp;
-router.delete('/:id',authMiddleware, PostController.DeleteItem.bind(PostController));
+router.delete('/:id', authMiddleware, PostController.DeleteItem.bind(PostController));
 &nbsp;
 export default router;
 &nbsp;</pre></td></tr></table></pre>
@@ -679,7 +706,7 @@ export default router;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-01-11T22:49:04.811Z
+                at 2025-01-19T13:27:41.142Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "tsc && node ./dist/src/server.js",
-    "dev": "nodemon ./src/server.ts",
-    "test": "tsc && jest --detectOpenHandles --forceExit --coverage --runInBand",
-    "testPost": "tsc && jest --detectOpenHandles --forceExit post.test.ts",
-    "testAuth": "tsc && jest --detectOpenHandles --forceExit --coverage auth.test.ts",
-    "testComment": "tsc && jest --detectOpenHandles --forceExit comment.test.ts",
+    "dev": "copy .env_dev .env && nodemon ./src/server.ts",
+    "start": "copy .env_dev .env &&tsc && node ./dist/src/server.js",
+    "test": "copy .env_test .env &&tsc && jest --detectOpenHandles --forceExit --coverage --runInBand",
+    "testPost": "copy .env_test .env &&tsc && jest --detectOpenHandles --forceExit post.test.ts",
+    "testAuth": "copy .env_test .env &&tsc && jest --detectOpenHandles --forceExit auth.test.ts",
+    "testComment": "copy .env_test .env &&tsc && jest --detectOpenHandles --forceExit comment.test.ts",
     "lint": "eslint . --ext .ts"
   },
   "author": "Ilana Barkin + Dana Elazra",
@@ -42,7 +42,7 @@
     "swagger-ui-express": "^5.0.1",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5.7.2",
+    "typescript": "^5.7.3",
     "typescript-eslint": "^8.19.0"
   }
 }

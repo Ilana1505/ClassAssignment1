@@ -3,7 +3,7 @@ POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-  "email": "dana199@gmail.com",
+  "email": "dana9@gmail.com",
   "password": "1234"
 }
 
@@ -12,7 +12,7 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "dana199@gmail.com",
+  "email": "dana9@gmail.com",
   "password": "1234"
 }
 
@@ -21,33 +21,32 @@ POST http://localhost:3000/auth/refresh
 Content-Type: application/json
 
 {
-  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZjJmNGQ5NWVlZmQ3ZTdkMTQ0NTUiLCJyYW5kb20iOjgzNzk0NSwiaWF0IjoxNzM2NjM1MTI2LCJleHAiOjE3MzcyMzk5MjZ9.FpgLjFifVSknQnxIKaWMBEfFAGRyXhBFBNDGMxLX4Mw"
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzhjZjhiNzQ2OTQ2YmYyZjlkZDE2YmEiLCJyYW5kb20iOjkxMTg4OCwiaWF0IjoxNzM3MjkxOTYxLCJleHAiOjE3Mzc4OTY3NjF9.haKweUQPoT9GRBiGda6d_PWoLbpbDoR9bR5isI1uXfk"
 }
 
 ### Create a new post with an access token
 POST http://localhost:3000/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZWZlNzY5YzU1NGEwM2E0NTVhMTciLCJyYW5kb20iOjkzMTMxNCwiaWF0IjoxNzM2NjM0NDE0LCJleHAiOjE3MzY2MzQ0NDR9.Hsb9KaGAkj6xx2reTmSI7YIu3NVTnrZQdm2uLCPNJec
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzhjZjhiNzQ2OTQ2YmYyZjlkZDE2YmEiLCJyYW5kb20iOjkxMTg4OCwiaWF0IjoxNzM3MjkxOTYxLCJleHAiOjE3MzcyOTI1NjF9.hXH-x9BT23Cxj5lfX9q2wQvtKtlNkCNp6oqxsppV3gY
 
 {
   "title": "My First Post",
-  "content": "This is the content of my first post.",
-  "sender": "6782e44cdd1b988b919ee0f1"
+  "content": "This is the content of my first post."
 }
 
 ### Get all posts
 GET http://localhost:3000/posts
 
 ### Get post by ID
-GET http://localhost:3000/posts/6782e534848ccc693deffd2c
+GET http://localhost:3000/posts/678cf8ed46946bf2f9dd16be
 
 ### Get posts by sender
-GET http://localhost:3000/posts?sender=6782e44cdd1b988b919ee0f1
+GET http://localhost:3000/posts?sender=678cf8b746946bf2f9dd16ba
 
 ### Update a post with an access token
-PUT http://localhost:3000/posts/6782e534848ccc693deffd2c
+PUT http://localhost:3000/posts/678cf8ed46946bf2f9dd16be
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZTQ0Y2RkMWI5ODhiOTE5ZWUwZjEiLCJyYW5kb20iOjk2NzQzNiwiaWF0IjoxNzM2NjMxODU5LCJleHAiOjE3MzY2MzIwMzl9.k8X1gHZedeSDXnA8J5TWnVCGa6fgnRgN2g6YmQqL06w
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzhjZjhiNzQ2OTQ2YmYyZjlkZDE2YmEiLCJyYW5kb20iOjkxMTg4OCwiaWF0IjoxNzM3MjkxOTYxLCJleHAiOjE3MzcyOTI1NjF9.hXH-x9BT23Cxj5lfX9q2wQvtKtlNkCNp6oqxsppV3gY
 
 {
   "title": "Updated Title",
@@ -55,46 +54,45 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZTQ0Y
 }
 
 ### Delete a post with an access token
-DELETE http://localhost:3000/posts/6782e552848ccc693deffd2e
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZTQ0Y2RkMWI5ODhiOTE5ZWUwZjEiLCJyYW5kb20iOjk2NzQzNiwiaWF0IjoxNzM2NjMxODU5LCJleHAiOjE3MzY2MzIwMzl9.k8X1gHZedeSDXnA8J5TWnVCGa6fgnRgN2g6YmQqL06w
+DELETE http://localhost:3000/posts/678cf8ed46946bf2f9dd16be
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzhjZjhiNzQ2OTQ2YmYyZjlkZDE2YmEiLCJyYW5kb20iOjkxMTg4OCwiaWF0IjoxNzM3MjkxOTYxLCJleHAiOjE3MzcyOTI1NjF9.hXH-x9BT23Cxj5lfX9q2wQvtKtlNkCNp6oqxsppV3gY
 
 ### Create a new comment with an access token
 POST http://localhost:3000/comments
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZTQ0Y2RkMWI5ODhiOTE5ZWUwZjEiLCJyYW5kb20iOjcwNjA3NCwiaWF0IjoxNzM2NjMyMjc0LCJleHAiOjE3MzY2MzI0NTR9.9ks6z_MUJ-X-Jjsrn6cG-km8tXZLdcKfsW6x_TDURcg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzhjZjhiNzQ2OTQ2YmYyZjlkZDE2YmEiLCJyYW5kb20iOjkxMTg4OCwiaWF0IjoxNzM3MjkxOTYxLCJleHAiOjE3MzcyOTI1NjF9.hXH-x9BT23Cxj5lfX9q2wQvtKtlNkCNp6oqxsppV3gY
 
 {
   "comment": "This is a comment",
-  "postId": "6782e7fd848ccc693deffd6d",
-  "sender": "6782e44cdd1b988b919ee0f1"
+  "postId": "678cf8f146946bf2f9dd16c0"
 }
 
 ### Get all comments
 GET http://localhost:3000/comments
 
 ### Get comments by postId
-GET http://localhost:3000/comments/posts/6782e7fd848ccc693deffd6d
+GET http://localhost:3000/comments/posts/678cf8f146946bf2f9dd16c0
 
 ### Get comment by ID
-GET http://localhost:3000/comments/6782e6aa848ccc693deffd4f
+GET http://localhost:3000/comments/678cf92046946bf2f9dd16c9
 
 ### Update comment with an access token
-PUT http://localhost:3000/comments/6782e6aa848ccc693deffd4f
+PUT http://localhost:3000/comments/678cf92046946bf2f9dd16c9
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZTQ0Y2RkMWI5ODhiOTE5ZWUwZjEiLCJyYW5kb20iOjM5NDM4NiwiaWF0IjoxNzM2NjMyMDg4LCJleHAiOjE3MzY2MzIyNjh9.sm5IhCAmTQT-Tg_fVkszJ2UjKq47m9WqVOwjURcdq_s
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzhjZjhiNzQ2OTQ2YmYyZjlkZDE2YmEiLCJyYW5kb20iOjkxMTg4OCwiaWF0IjoxNzM3MjkxOTYxLCJleHAiOjE3MzcyOTI1NjF9.hXH-x9BT23Cxj5lfX9q2wQvtKtlNkCNp6oqxsppV3gY
 
 {
   "comment": "This is the updated comment content"
 }
 
 ### Delete comment with an access token
-DELETE http://localhost:3000/comments/6782e6aa848ccc693deffd4f
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZTQ0Y2RkMWI5ODhiOTE5ZWUwZjEiLCJyYW5kb20iOjM5NDM4NiwiaWF0IjoxNzM2NjMyMDg4LCJleHAiOjE3MzY2MzIyNjh9.sm5IhCAmTQT-Tg_fVkszJ2UjKq47m9WqVOwjURcdq_s
+DELETE http://localhost:3000/comments/678cf92046946bf2f9dd16c9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzhjZjhiNzQ2OTQ2YmYyZjlkZDE2YmEiLCJyYW5kb20iOjkxMTg4OCwiaWF0IjoxNzM3MjkxOTYxLCJleHAiOjE3MzcyOTI1NjF9.hXH-x9BT23Cxj5lfX9q2wQvtKtlNkCNp6oqxsppV3gY
 
 ### Logout a user
 POST http://localhost:3000/auth/logout
 Content-Type: application/json
 
 {
-  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyZTQ0Y2RkMWI5ODhiOTE5ZWUwZjEiLCJyYW5kb20iOjM2NjI4NiwiaWF0IjoxNzM2NjMyNDQ3LCJleHAiOjE3MzcyMzcyNDd9.s3wUKgJ-TCV431Y2GwcRU1w_gP78wWO9DmQtbbL9-kE"
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzhjZjhiNzQ2OTQ2YmYyZjlkZDE2YmEiLCJyYW5kb20iOjkxMTg4OCwiaWF0IjoxNzM3MjkxOTYxLCJleHAiOjE3Mzc4OTY3NjF9.haKweUQPoT9GRBiGda6d_PWoLbpbDoR9bR5isI1uXfk"
 }

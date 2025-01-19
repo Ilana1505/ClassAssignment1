@@ -3,6 +3,10 @@ import UserModel from '../models/user_models';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+type TokenPayload = {
+    _id: string;
+};
+
 const Register = async (req: Request, res: Response) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -181,9 +185,6 @@ const Refresh = async (req: Request, res: Response) => {
     });
 };
 
-type TokenPayload = {
-    _id: string;
-};
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers['authorization'];

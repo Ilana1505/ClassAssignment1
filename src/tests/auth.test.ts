@@ -32,13 +32,9 @@ const userInfo: UserInfo = {
     password: "123456"
 };
 
-const invalidUser: UserInfo = {
-    email: "dana@gmail.com",
-    password: ""
-};
+
 
 describe("Auth test", () => {
-
     test("Test auth registration", async () => {
         const response = await request(app).post("/auth/register").send(userInfo);
         expect(response.statusCode).toBe(200);
@@ -55,8 +51,18 @@ describe("Auth test", () => {
     });
 
     test("Test registration fail without password", async () => {
-        const response = await request(app).post("/auth/register").send(invalidUser);
+        const response = await request(app).post("/auth/register").send({
+            email: userInfo.email
+        });
         expect(response.statusCode).not.toBe(200);
+        expect(response.text).toBe("missing email or password");
+    });
+    
+
+    test("Test registration without email", async () => {
+        const response = await request(app).post("/auth/register").send({ password: "123456" });
+        expect(response.statusCode).toBe(400);
+        expect(response.text).toBe("missing email or password");
     });
 
     test("Test auth login", async () => {
@@ -79,8 +85,16 @@ describe("Auth test", () => {
     });
 
     test("Test auth login fail without password", async () => {
-        const response = await request(app).post("/auth/login").send(invalidUser);
+        const response = await request(app).post("/auth/login").send(
+            { email: userInfo.email }
+        );
         expect(response.statusCode).not.toBe(200);
+    });
+
+    test("Test login with empty body", async () => {
+        const response = await request(app).post("/auth/login").send({});
+        expect(response.statusCode).toBe(400);
+        expect(response.text).toBe("wrong email or password");
     });
 
     test("Test auth login fail with false password", async () => {
@@ -92,29 +106,6 @@ describe("Auth test", () => {
         const trueToken = process.env.TOKEN_SECRET;
         delete process.env.TOKEN_SECRET;
         const response = await request(app).post("/auth/login").send(userInfo);
-        expect(response.statusCode).not.toBe(200);
-        process.env.TOKEN_SECRET = trueToken;
-    });
-
-    test("Test refresh token", async () => {
-        const response = await request(app).post("/auth/refresh")
-            .send({ refreshToken: userInfo.refreshToken });
-        expect(response.statusCode).toBe(200);
-        expect(response.body.accessToken).toBeDefined();
-        expect(response.body.refreshToken).toBeDefined();
-        userInfo.accessToken = response.body.accessToken;
-        userInfo.refreshToken = response.body.refreshToken;
-    });
-
-    test("Test missing refresh token", async () => {
-        const response = await request(app).post("/auth/refresh");
-        expect(response.statusCode).not.toBe(200);
-    });
-
-    test("Test missing TOKEN_SECRET in refresh", async () => {
-        const trueToken = process.env.TOKEN_SECRET;
-        delete process.env.TOKEN_SECRET;
-        const response = await request(app).post("/auth/refresh").send({ refreshToken: userInfo.refreshToken });
         expect(response.statusCode).not.toBe(200);
         process.env.TOKEN_SECRET = trueToken;
     });
@@ -147,6 +138,50 @@ describe("Auth test", () => {
         expect(response.statusCode).not.toBe(201);
     });
 
+    test("Test refresh token", async () => {
+        const response = await request(app).post("/auth/refresh")
+            .send({ refreshToken: userInfo.refreshToken });
+        expect(response.statusCode).toBe(200);
+        expect(response.body.accessToken).toBeDefined();
+        expect(response.body.refreshToken).toBeDefined();
+        userInfo.accessToken = response.body.accessToken;
+        userInfo.refreshToken = response.body.refreshToken;
+    });
+
+    test("Test refresh with empty body", async () => {
+        const response = await request(app).post("/auth/refresh").send({});
+        expect(response.statusCode).toBe(400);
+        expect(response.text).toBe("invalid token");
+    });
+
+    test("Test refresh with deleted user", async () => {
+        const refreshToken = userInfo.refreshToken;
+        await UserModel.deleteOne({ email: userInfo.email });
+        const response = await request(app).post("/auth/refresh")
+            .send({ refreshToken });
+        expect(response.statusCode).toBe(400);
+        expect(response.text).toBe("invalid token");
+        
+        await request(app).post("/auth/register").send(userInfo);
+        const loginRes = await request(app).post("/auth/login").send(userInfo);
+        userInfo.accessToken = loginRes.body.accessToken;
+        userInfo.refreshToken = loginRes.body.refreshToken;
+        userInfo._id = loginRes.body._id;
+    });
+
+    test("Test missing refresh token", async () => {
+        const response = await request(app).post("/auth/refresh");
+        expect(response.statusCode).not.toBe(200);
+    });
+
+    test("Test missing TOKEN_SECRET in refresh", async () => {
+        const trueToken = process.env.TOKEN_SECRET;
+        delete process.env.TOKEN_SECRET;
+        const response = await request(app).post("/auth/refresh").send({ refreshToken: userInfo.refreshToken });
+        expect(response.statusCode).not.toBe(200);
+        process.env.TOKEN_SECRET = trueToken;
+    });
+
     test("Test invalid refresh token in logout", async () => {
         const invalidToken = 'invalid-refresh-token';
         const response = await request(app).post("/auth/refresh").send({ refreshToken: invalidToken });
@@ -168,11 +203,27 @@ describe("Auth test", () => {
         process.env.TOKEN_SECRET = trueToken;
     });
 
+    test("Test logout with deleted user", async () => {
+        const loginRes = await request(app).post("/auth/login").send(userInfo);
+        const refreshToken = loginRes.body.refreshToken;
+        await UserModel.deleteOne({ email: userInfo.email }); 
+        const response = await request(app).post("/auth/logout")
+            .send({ refreshToken });
+        expect(response.statusCode).toBe(400);
+        expect(response.text).toBe("invalid token");
+        await request(app).post("/auth/register").send(userInfo);
+        const newLoginRes = await request(app).post("/auth/login").send(userInfo);
+        userInfo.accessToken = newLoginRes.body.accessToken;
+        userInfo.refreshToken = newLoginRes.body.refreshToken;
+        userInfo._id = newLoginRes.body._id;
+    });
+
     test("Test invalid refresh token in logout", async () => {
         const invalidToken = 'invalid-refresh-token';
         const response = await request(app).post("/auth/logout").send({ refreshToken: invalidToken });
         expect(response.statusCode).toBe(403);
         expect(response.text).toBe("invalid token");
+        
     });
 
     test("Test valid refresh token and successful logout", async () => {
@@ -251,5 +302,4 @@ describe("Auth test", () => {
             });
         expect(response4.statusCode).toBe(201);
     });
-
 });

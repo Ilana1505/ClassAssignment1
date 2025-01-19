@@ -1,6 +1,6 @@
 import express from 'express';
 import CommentController from '../controllers/comment_controllers';
-import {authMiddleware} from '../controllers/auth_controllers';
+import { authMiddleware } from '../controllers/auth_controllers';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ const router = express.Router();
  */
 
 /**
- * @openapi
+ * @swagger
  * components:
  *   schemas:
  *     Comment:
@@ -38,11 +38,23 @@ const router = express.Router();
  */
 
 /**
- * @openapi
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
  * /comments:
  *   post:
  *     summary: Creates a new comment
  *     description: Creates a new comment for a post.
+ *     security:
+ *       - bearerAuth: []  
  *     tags: [Comments]
  *     requestBody:
  *       required: true
@@ -55,12 +67,6 @@ const router = express.Router();
  *                 type: string
  *               postId:
  *                 type: string
- *               sender:
- *                 type: string
- *             required:
- *               - comment
- *               - postId
- *               - sender
  *     responses:
  *       201:
  *         description: The created comment
@@ -71,11 +77,10 @@ const router = express.Router();
  *       400:
  *         description: Missing or incorrect input
  */
-
-router.post('/', authMiddleware , CommentController.CreateItem.bind(CommentController));
+router.post('/', authMiddleware, CommentController.CreateItem.bind(CommentController));
 
 /**
- * @openapi
+ * @swagger
  * /comments:
  *   get:
  *     summary: Get all comments
@@ -100,11 +105,10 @@ router.post('/', authMiddleware , CommentController.CreateItem.bind(CommentContr
  *       400:
  *         description: Invalid query parameters
  */
-
 router.get('/', CommentController.GetAll.bind(CommentController));
 
 /**
- * @openapi
+ * @swagger
  * /comments/posts/{postId}:
  *   get:
  *     summary: Get all comments for a specific post
@@ -129,11 +133,10 @@ router.get('/', CommentController.GetAll.bind(CommentController));
  *       400:
  *         description: Invalid postId format
  */
-
 router.get('/posts/:postId', CommentController.GetAll.bind(CommentController));
 
 /**
- * @openapi
+ * @swagger
  * /comments/{id}:
  *   get:
  *     summary: Get a comment by ID
@@ -158,15 +161,16 @@ router.get('/posts/:postId', CommentController.GetAll.bind(CommentController));
  *       400:
  *         description: Invalid ID format
  */
-
 router.get('/:id', CommentController.GetById.bind(CommentController));
 
 /**
- * @openapi
+ * @swagger
  * /comments/{id}:
  *   put:
  *     summary: Update a comment by ID
  *     description: Updates the content of an existing comment.
+ *     security:
+ *       - bearerAuth: []  
  *     tags: [Comments]
  *     parameters:
  *       - in: path
@@ -199,15 +203,16 @@ router.get('/:id', CommentController.GetById.bind(CommentController));
  *       400:
  *         description: Invalid input
  */
-
-router.put('/:id', authMiddleware , CommentController.UpdateItem.bind(CommentController));
+router.put('/:id', authMiddleware, CommentController.UpdateItem.bind(CommentController));
 
 /**
- * @openapi
+ * @swagger
  * /comments/{id}:
  *   delete:
  *     summary: Delete a comment by ID
- *     description: Deletes a comment from the system by its unique ID. 
+ *     description: Deletes a comment from the system by its unique ID.
+ *     security:
+ *       - bearerAuth: []  
  *     tags: [Comments]
  *     parameters:
  *       - in: path
@@ -220,9 +225,8 @@ router.put('/:id', authMiddleware , CommentController.UpdateItem.bind(CommentCon
  *       200:
  *         description: Successfully deleted the comment
  *       404:
- *         description: Comment not found 
+ *         description: Comment not found
  */
-
-router.delete('/:id', authMiddleware , CommentController.DeleteItem.bind(CommentController));
+router.delete('/:id', authMiddleware, CommentController.DeleteItem.bind(CommentController));
 
 export default router;

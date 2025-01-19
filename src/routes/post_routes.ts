@@ -1,6 +1,6 @@
 import express from 'express';
 import PostController from '../controllers/post_controllers';
-import {authMiddleware} from '../controllers/auth_controllers';
+import { authMiddleware } from '../controllers/auth_controllers';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ const router = express.Router();
  */
 
 /**
- * @openapi
+ * @swagger
  * components:
  *   schemas:
  *     Post:
@@ -38,11 +38,23 @@ const router = express.Router();
  */
 
 /**
- * @openapi
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
  * /posts:
  *   post:
  *     summary: Creates a new post
  *     description: Creates a new post with a title and content.
+ *     security:
+ *       - bearerAuth: []  
  *     tags: [Posts]
  *     requestBody:
  *       required: true
@@ -52,15 +64,13 @@ const router = express.Router();
  *             type: object
  *             properties:
  *               title:
- *                 type: string           
+ *                 type: string  
+ *                 description: The post title
+ *                 example: "My first post"         
  *               content:
  *                 type: string
- *               sender:
- *                 type: string
- *             required:
- *               - title
- *               - content
- *               - sender
+ *                 description: The post content
+ *                 example: "This is my first post ....."
  *     responses:
  *       201:
  *         description: The created post
@@ -71,11 +81,10 @@ const router = express.Router();
  *       400:
  *         description: Missing or incorrect input
  */
-
-router.post('/',authMiddleware ,PostController.CreateItem.bind(PostController));
+router.post('/', authMiddleware, PostController.CreateItem.bind(PostController));
 
 /**
- * @openapi
+ * @swagger
  * /posts:
  *   get:
  *     summary: Get all posts
@@ -100,11 +109,10 @@ router.post('/',authMiddleware ,PostController.CreateItem.bind(PostController));
  *       400:
  *         description: Invalid query parameters
  */
-
 router.get('/', PostController.GetAll.bind(PostController));
 
 /**
- * @openapi
+ * @swagger
  * /posts/{id}:
  *   get:
  *     summary: Get a post by ID
@@ -129,15 +137,16 @@ router.get('/', PostController.GetAll.bind(PostController));
  *       400:
  *         description: Invalid ID format
  */
-
 router.get('/:id', PostController.GetById.bind(PostController));
 
 /**
- * @openapi
+ * @swagger
  * /posts/{id}:
  *   put:
  *     summary: Update a post by ID
  *     description: Updates the content of an existing post.
+ *     security:
+ *       - bearerAuth: []  
  *     tags: [Posts]
  *     parameters:
  *       - in: path
@@ -174,15 +183,16 @@ router.get('/:id', PostController.GetById.bind(PostController));
  *       400:
  *         description: Invalid input
  */
-
-router.put('/:id',authMiddleware, PostController.UpdateItem.bind(PostController));
+router.put('/:id', authMiddleware, PostController.UpdateItem.bind(PostController));
 
 /**
- * @openapi
+ * @swagger
  * /posts/{id}:
  *   delete:
  *     summary: Delete a post by ID
- *     description: Deletes a post from the system by its unique ID. 
+ *     description: Deletes a post from the system by its unique ID.
+ *     security:
+ *       - bearerAuth: []  
  *     tags: [Posts]
  *     parameters:
  *       - in: path
@@ -197,7 +207,6 @@ router.put('/:id',authMiddleware, PostController.UpdateItem.bind(PostController)
  *       404:
  *         description: Post not found
  */
-
-router.delete('/:id',authMiddleware, PostController.DeleteItem.bind(PostController));
+router.delete('/:id', authMiddleware, PostController.DeleteItem.bind(PostController));
 
 export default router;

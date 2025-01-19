@@ -28,7 +28,7 @@ beforeAll(async () => {
     const response = await request(app).post("/auth/login").send(userInfo);
     expect(response.statusCode).toBe(200);
     userInfo.token = response.body.accessToken;
-    testComment.sender = response.body._id;
+    userInfo._id = response.body._id;
 });
 
 afterAll(async() => {          
@@ -41,7 +41,7 @@ let commentId = "";
 const testComment = {
     comment: "Test title",
     postId: "123456789123456789123456",
-    sender: "user123",
+    sender: userInfo._id,
 };
   
 const invalidComment = {
@@ -62,7 +62,8 @@ describe("Comment test", () => {
         .send(testComment);
         expect(response.statusCode).toBe(201);
         expect(response.body.comment).toBe(testComment.comment);
-        expect(response.body.sender).toBe(testComment.sender);
+        expect(response.body.postId).toBe(testComment.postId);
+        expect(response.body.sender).toBe(userInfo._id);
         commentId = response.body._id;  
     });
 
@@ -80,10 +81,10 @@ describe("Comment test", () => {
     });
 
     test("Test get comment by sender", async () => {
-        const response = await request(app).get("/comments?sender=" + testComment.sender);        
+        const response = await request(app).get("/comments?sender=" + userInfo._id);        
         expect(response.statusCode).toBe(200);
         expect(response.body).toHaveLength(1);
-        expect(response.body[0].sender).toBe(testComment.sender);
+        expect(response.body[0].sender).toBe(userInfo._id);
     });
 
     test("Test get comments by sender fail", async () => {
